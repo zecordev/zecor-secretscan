@@ -1,0 +1,36 @@
+# SPDX-License-Identifier: Apache-2.0
+[package]
+name = "zecor-secretscan"
+description = "SIMD-accelerated secret and high-entropy-token scanning for diffs and files."
+version = "0.1.0"
+edition = "2021"
+license = "Apache-2.0"
+authors = ["Hilachem Ventures LLC"]
+repository = "https://github.com/zecordev/zecor-secretscan"
+rust-version = "1.75"
+
+[lib]
+name = "zecor_secretscan"
+path = "src/lib.rs"
+
+[[bin]]
+name = "zecor-secretscan"
+path = "src/main.rs"
+
+[dependencies]
+regex = "1"
+aho-corasick = "1"
+memchr = "2"
+ignore = "0.4"
+rayon = "1"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+[dev-dependencies]
+tempfile = "3"
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 1
+strip = true
