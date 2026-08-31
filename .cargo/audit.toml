@@ -1,0 +1,4 @@
+[advisories]
+# `paste` is unmaintained (author archived it), not vulnerable; pulled transitively
+# by tokenizers/tree-sitter deps with no upgrade available.
+ignore = ["RUSTSEC-2024-0436"]
