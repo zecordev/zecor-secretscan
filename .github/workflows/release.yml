@@ -36,7 +36,7 @@ jobs:
           mkdir dist
           cp "target/${{ matrix.target }}/release/$zecor-secretscan${ext}" "dist/$zecor-secretscan-${{ matrix.target }}${ext}"
           (cd dist && shasum -a 256 * > "$zecor-secretscan-${{ matrix.target }}.sha256")
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: ${{ matrix.target }}
           path: dist/*
