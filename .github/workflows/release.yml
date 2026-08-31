@@ -3,7 +3,7 @@ on:
   push:
     tags: ["v*"]
 permissions:
-  contents: write
+  contents: read
 jobs:
   build:
     strategy:
@@ -34,8 +34,8 @@ jobs:
           bin="zecor-secretscan"
           ext=""; [ "${{ runner.os }}" = "Windows" ] && ext=".exe"
           mkdir dist
-          cp "target/${{ matrix.target }}/release/$zecor-secretscan${ext}" "dist/$zecor-secretscan-${{ matrix.target }}${ext}"
-          (cd dist && shasum -a 256 * > "$zecor-secretscan-${{ matrix.target }}.sha256")
+          cp "target/${{ matrix.target }}/release/${bin}${ext}" "dist/${bin}-${{ matrix.target }}${ext}"
+          (cd dist && sha256sum ./* > "${bin}-${{ matrix.target }}.sha256")
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.target }}
@@ -43,6 +43,8 @@ jobs:
   publish:
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/download-artifact@v4
         with: { path: dist, merge-multiple: true }
